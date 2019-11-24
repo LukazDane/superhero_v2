@@ -33,6 +33,16 @@ class Hero:
         # we're not adding strings, instead we'll add ability objects.
         self.abilities.append(ability)
 
+    def attack(self):
+        # start our total out at 0
+        total_damage = 0
+        # loop through all of our hero's abilities
+        for ability in self.abilities:
+            # add the damage of each attack to our running total
+            total_damage += ability.attack()
+        # return the total damage
+        return total_damage
+
 
 class Ability:
     def __init__(self, name, max_damage):
@@ -70,10 +80,10 @@ class Armor:
 
 if __name__ == "__main__":
     # If you run this file from the terminal
-    # this block is executed.
+    # this block of code is executed.
     ability = Ability("Great Debugging", 50)
-    ability2 = Ability("More Debugging", 60)
+    another_ability = Ability("Smarty Pants", 90)
     hero = Hero("Grace Hopper", 200)
     hero.add_ability(ability)
-    hero.add_ability(ability2)
-    print(hero.abilities)
+    hero.add_ability(another_ability)
+    print(hero.attack())

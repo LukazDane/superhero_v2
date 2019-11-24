@@ -1,5 +1,5 @@
 # my_dogs.py
-import dog  # we need to specify exactly what we want
+from dog import Dog  # we need to specify exactly what we want
 
-my_dog = dog.Dog("Rex", "SuperDog")
+my_dog = Dog("Rex", "SuperDog")
 my_dog.bark()

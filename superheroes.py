@@ -60,6 +60,16 @@ class Hero:
         defense = self.defend()
         self.current_health -= damage - defense
 
+    def is_alive(self):
+        '''Return True or False depending on whether the hero is alive or not. '''
+    # TODO: Check the current_health of the hero.
+    # if it is <= 0, then return False. Otherwise, they still have health
+    # and are therefore alive, so return True
+        if self.current_health <= 0:
+            return False
+        else:
+            return True
+
 
 class Ability:
     def __init__(self, name, max_damage):
@@ -97,11 +107,10 @@ class Armor:
 
 if __name__ == "__main__":
     # If you run this file from the terminal
-    # this block of code is executed.
+    # this block is executed.
 
     hero = Hero("Grace Hopper", 200)
-    print(hero.current_health)
-    shield = Armor("Shield", 50)
-    hero.add_armor(shield)
-    hero.take_damage(50)
-    print(hero.current_health)
+    hero.take_damage(150)
+    print(hero.is_alive())
+    hero.take_damage(15000)
+    print(hero.is_alive())

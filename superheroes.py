@@ -33,6 +33,9 @@ class Hero:
         # we're not adding strings, instead we'll add ability objects.
         self.abilities.append(ability)
 
+    def add_armor(self, armor):
+        self.armors.append(armor)
+
     def attack(self):
         # start our total out at 0
         total_damage = 0
@@ -42,6 +45,20 @@ class Hero:
             total_damage += ability.attack()
         # return the total damage
         return total_damage
+
+    def defend(self):
+        total_block = 0
+        for armor in self.armors:
+            total_block += armor.block()
+        return total_block
+
+    def take_damage(self, damage):
+        '''Updates self.current_health to reflect the damage minus the defense.
+        '''
+        # TODO: Create a method that updates self.current_health to the current
+        # minus the the amount returned from calling self.defend(damage).
+        defense = self.defend()
+        self.current_health -= damage - defense
 
 
 class Ability:
@@ -81,9 +98,10 @@ class Armor:
 if __name__ == "__main__":
     # If you run this file from the terminal
     # this block of code is executed.
-    ability = Ability("Great Debugging", 50)
-    another_ability = Ability("Smarty Pants", 90)
+
     hero = Hero("Grace Hopper", 200)
-    hero.add_ability(ability)
-    hero.add_ability(another_ability)
-    print(hero.attack())
+    print(hero.current_health)
+    shield = Armor("Shield", 50)
+    hero.add_armor(shield)
+    hero.take_damage(50)
+    print(hero.current_health)

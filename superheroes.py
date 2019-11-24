@@ -63,6 +63,6 @@ class Armor:
 if __name__ == "__main__":
     # If you run this file from the terminal
     # this block is executed.
-    armor = Armor("Debugging Shield", 10)
-    print(armor.name)
-    print(armor.block())
+    my_hero = Hero("Grace Hopper", 200)
+    print(my_hero.name)
+    print(my_hero.current_health)

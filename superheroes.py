@@ -25,6 +25,14 @@ class Hero:
         # always the same as their starting health (no damage taken yet!)
         self.current_health = starting_health
 
+    def add_ability(self, ability):
+        ''' Add ability to abilities list '''
+
+        # We used the append method to add strings to a list
+        # in the Rainbow Checklist tutorial. This time,
+        # we're not adding strings, instead we'll add ability objects.
+        self.abilities.append(ability)
+
 
 class Ability:
     def __init__(self, name, max_damage):
@@ -63,6 +71,9 @@ class Armor:
 if __name__ == "__main__":
     # If you run this file from the terminal
     # this block is executed.
-    my_hero = Hero("Grace Hopper", 200)
-    print(my_hero.name)
-    print(my_hero.current_health)
+    ability = Ability("Great Debugging", 50)
+    ability2 = Ability("More Debugging", 60)
+    hero = Hero("Grace Hopper", 200)
+    hero.add_ability(ability)
+    hero.add_ability(ability2)
+    print(hero.abilities)

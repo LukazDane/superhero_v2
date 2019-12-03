@@ -25,6 +25,9 @@ class Hero:
         # when a hero is created, their current health is
         # always the same as their starting health (no damage taken yet!)
         self.current_health = starting_health
+        self.deaths = 0
+        self.kills = 0
+        self.status = "Alive"
 
     def add_ability(self, ability):
         ''' Add ability to abilities list '''
@@ -39,6 +42,14 @@ class Hero:
 
     def add_weapon(self, weapon):
         self.abilities.append(weapon)
+
+    def add_kill(self, num_kills):
+        ''' Update self.kills by num_kills amount'''
+        self.kills += num_kills
+
+    def add_death(self, num_deaths):
+        ''' Update deaths with num_deaths'''
+        self.deaths += num_deaths
 
     def attack(self):
         # start our total out at 0
@@ -92,11 +103,15 @@ class Hero:
             opponent.take_damage(hero1_attack)
 
             if self.is_alive() == False:
+                opponent.add_kill(1)
+                self.add_death(1)
                 self.status = "Dead"
                 opponent.status = "Alive"
                 print(opponent.name + " won!")
                 fighting = False
             elif opponent.is_alive() == False:
+                self.add_kill(1)
+                opponent.add_death(1)
                 opponent.status = "Dead"
                 self.status = "Alive"
                 print(self.name + " won!")
@@ -164,6 +179,53 @@ class Team:
 
     def view_all_heroes(self):
         print([i.name for i in self.heroes])
+
+    def stats(self):
+        '''Print team statistics'''
+        for hero in self.heroes:
+            kd = hero.kills / hero.deaths
+            print(f"{hero.name} Kill/Deaths:{kd}\n ____________________________")
+
+    def revive_heroes(self, health=100):
+        ''' Reset all heroes health to starting_health'''
+        for hero in self.heroes:
+            hero.current_health = 100
+            hero.status = "Alive"
+
+    def attack(self, other_team):
+        ''' Battle each team against each other.'''
+
+        living_heroes = list()
+        living_opponents = list()
+
+        for i in self.heroes:
+            if i.status == "Alive":
+                living_heroes.append(self.heroes.index(i))
+
+        for x in other_team.heroes:
+            if x.status == "Alive":
+                living_opponents.append(other_team.heroes.index(x))
+
+        while len(living_heroes) > 0 and len(living_opponents) > 0:
+            random_hero_1 = self.heroes[random.choice(living_heroes)]
+            random_hero_2 = other_team.heroes[random.choice(living_opponents)]
+
+            random_hero_1.fight(random_hero_2)
+
+            for death1 in self.heroes:
+                if death1.status == "Dead":
+                    living_heroes.pop(self.heroes.index(death1))
+
+            for death2 in other_team.heroes:
+                if death2.status == "Dead":
+                    living_opponents.pop(other_team.heroes.index(death2))
+
+        if len(living_heroes) > 0:
+            return self.name
+        elif len(living_opponents) > 0:
+            return other_team.name
+        elif len(living_heroes) == len(living_opponents):
+            return "Draw!"
 
 
 if __name__ == "__main__":

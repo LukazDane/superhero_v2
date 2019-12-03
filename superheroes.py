@@ -104,8 +104,6 @@ class Hero:
             else:
                 continue
 
-        pass
-
 
 class Ability:
     def __init__(self, name, max_damage):
@@ -145,6 +143,27 @@ class Weapon(Ability):
     def attack(self):
         random_value = random.randint(self.max_damage//2, self.max_damage)
         return random_value
+
+
+class Team:
+    def __init__(self, name):
+        self.name = name
+        self.heroes = list()
+
+    def add_hero(self, hero):
+        self.heroes.append(hero)
+
+    def remove_hero(self, name):
+        foundHero = False
+        for hero in self.heroes:
+            if hero.name == name:
+                self.heroes.remove(hero)
+                foundHero = True
+        if not foundHero:
+            return 0
+
+    def view_all_heroes(self):
+        print([i.name for i in self.heroes])
 
 
 if __name__ == "__main__":

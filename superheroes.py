@@ -88,15 +88,11 @@ class Hero:
             opponent.take_damage(hero1_attack)
 
             if self.is_alive() == False:
-                # opponent.add_kill(1)
-                # self.add_deaths(1)
                 self.status = "Dead"
                 opponent.status = "Alive"
                 print(opponent.name + " won!")
                 fighting = False
             elif opponent.is_alive() == False:
-                # self.add_kill(1)
-                # opponent.add_deaths(1)
                 opponent.status = "Dead"
                 self.status = "Alive"
                 print(self.name + " won!")

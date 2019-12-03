@@ -17,6 +17,7 @@ class Hero:
         # and are set to empty lists on initialization
         self.abilities = list()
         self.armors = list()
+
         # we know the name of our hero, so we assign it here
         self.name = name
         # similarly, our starting health is passed in, just like name
@@ -35,6 +36,9 @@ class Hero:
 
     def add_armor(self, armor):
         self.armors.append(armor)
+
+    def add_weapon(self, weapon):
+        self.abilities.append(weapon)
 
     def attack(self):
         # start our total out at 0
@@ -137,18 +141,16 @@ class Armor:
         return random_value
 
 
+class Weapon(Ability):
+    def attack(self):
+        random_value = random.randint(self.max_damage//2, self.max_damage)
+        return random_value
+
+
 if __name__ == "__main__":
     # If you run this file from the terminal
     # this block is executed.
-
-    hero1 = Hero("Wonder Woman")
-    hero2 = Hero("Dumbledore")
-    ability1 = Ability("Super Speed", 300)
-    ability2 = Ability("Super Eyes", 130)
-    ability3 = Ability("Wizard Wand", 80)
-    ability4 = Ability("Wizard Beard", 20)
-    hero1.add_ability(ability1)
-    hero1.add_ability(ability2)
-    hero2.add_ability(ability3)
-    hero2.add_ability(ability4)
-    hero1.fight(hero2)
+    hero = Hero("Wonder Woman")
+    weapon = Weapon("Lasso of Truth", 90)
+    hero.add_weapon(weapon)
+    print(hero.attack())

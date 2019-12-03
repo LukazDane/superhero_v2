@@ -70,6 +70,42 @@ class Hero:
         else:
             return True
 
+    def fight(self, opponent):
+        ''' Current Hero will take turns fighting the opponent hero passed in.'''
+        fighting = True
+        while fighting == True:
+            if self.abilities == None:
+                return "Draw"
+                fighting = False
+
+            hero1_attack = self.attack()
+            hero2_attack = opponent.attack()
+
+            hero1_defense = self.defend()
+            hero2_defense = opponent.defend()
+
+            self.take_damage(hero2_attack)
+            opponent.take_damage(hero1_attack)
+
+            if self.is_alive() == False:
+                # opponent.add_kill(1)
+                # self.add_deaths(1)
+                self.status = "Dead"
+                opponent.status = "Alive"
+                print(opponent.name + " won!")
+                fighting = False
+            elif opponent.is_alive() == False:
+                # self.add_kill(1)
+                # opponent.add_deaths(1)
+                opponent.status = "Dead"
+                self.status = "Alive"
+                print(self.name + " won!")
+                fighting = False
+            else:
+                continue
+
+        pass
+
 
 class Ability:
     def __init__(self, name, max_damage):
@@ -109,8 +145,14 @@ if __name__ == "__main__":
     # If you run this file from the terminal
     # this block is executed.
 
-    hero = Hero("Grace Hopper", 200)
-    hero.take_damage(150)
-    print(hero.is_alive())
-    hero.take_damage(15000)
-    print(hero.is_alive())
+    hero1 = Hero("Wonder Woman")
+    hero2 = Hero("Dumbledore")
+    ability1 = Ability("Super Speed", 300)
+    ability2 = Ability("Super Eyes", 130)
+    ability3 = Ability("Wizard Wand", 80)
+    ability4 = Ability("Wizard Beard", 20)
+    hero1.add_ability(ability1)
+    hero1.add_ability(ability2)
+    hero2.add_ability(ability3)
+    hero2.add_ability(ability4)
+    hero1.fight(hero2)

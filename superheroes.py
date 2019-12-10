@@ -354,14 +354,14 @@ class Arena:
         self.team_one.stats()
         self.team_two.stats()
 
-        # if self.winning_team == self.team_one.name:
-        #     for hero in self.team_one.heroes:
-        #         if hero.status == "Alive":
-        #             print("Surviving Heroes: " + hero.name)
-        # elif self.winning_team == self.team_two.name:
-        #     for hero in self.team_two.heroes:
-        #         if hero.status == "Alive":
-        #             print("Surviving Heroes: " + hero.name)
+        if self.winning_team == self.team_one.name:
+            for hero in self.team_one.heroes:
+                if hero.status == "Alive":
+                    print("Surviving Heroes: " + hero.name)
+        elif self.winning_team == self.team_two.name:
+            for hero in self.team_two.heroes:
+                if hero.status == "Alive":
+                    print("Surviving Heroes: " + hero.name)
 
 
 if __name__ == "__main__":
@@ -377,7 +377,7 @@ if __name__ == "__main__":
     while game_is_running:
 
         arena.team_battle()
-        # arena.show_stats()
+        arena.show_stats()
         play_again = input("Play Again? Y or N: ")
 
         # Check for Player Input

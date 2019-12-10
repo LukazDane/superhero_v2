@@ -178,7 +178,7 @@ class Team:
             return 0
 
     def view_all_heroes(self):
-        print([i.name for i in self.heroes])
+        print(str([i.name for i in self.heroes]))
 
     def stats(self):
         '''Print team statistics'''
@@ -186,7 +186,7 @@ class Team:
             k = hero.kills
             d = hero.deaths
             print(
-                f"{hero.name} Kills: {k} | Deaths: {d}\n ____________________________")
+                f"{hero.name} - Kills: {k} | Deaths: {d}\n")
 
     def revive_heroes(self, health=100):
         ''' Reset all heroes health to starting_health'''

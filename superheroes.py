@@ -188,6 +188,13 @@ class Team:
             print(
                 f"{hero.name} - Kills: {k} | Deaths: {d}\n")
 
+    def survivors(self):
+        living = list()
+        for hero in self.heroes:
+            if hero.is_alive():
+                living.append(hero)
+        return living
+
     def revive_heroes(self, health=100):
         ''' Reset all heroes health to starting_health'''
         for hero in self.heroes:
@@ -197,20 +204,20 @@ class Team:
     def attack(self, other_team):
         ''' Battle each team against each other.'''
 
-        living_heroes = list()
-        living_opponents = list()
+        # living_heroes = list()
+        # living_opponents = list()
 
-        for i in self.heroes:
-            if i.status == "Alive":
-                living_heroes.append(self.heroes.index(i))
+        # for i in self.heroes:
+        #     if i.status == "Alive":
+        #         living_heroes.append(self.heroes.index(i))
 
-        for x in other_team.heroes:
-            if x.status == "Alive":
-                living_opponents.append(other_team.heroes.index(x))
+        # for x in other_team.heroes:
+        #     if x.status == "Alive":
+        #         living_opponents.append(other_team.heroes.index(x))
 
-        while len(living_heroes) > 0 and len(living_opponents) > 0:
-            hero = self.heroes[random.choice(living_heroes)]
-            opponent = other_team.heroes[random.choice(living_opponents)]
+        while len(self.survivors()) > 0 and len(other_team.survivors()) > 0:
+            hero = random.choice(self.survivors())
+            opponent = random.choice(other_team.survivors())
 
             return hero.fight(opponent)
 
@@ -331,22 +338,30 @@ class Arena:
         self.team_two.view_all_heroes()
 
     def team_battle(self):
-        self.winning_team = self.team_one.attack(self.team_two)
+        print("battle started")
+        self.team_one.attack(self.team_two)
+        if len(self.team_one.survivors()) > 0 and len(self.team_two.survivors()) == 0:
+            self.winning_team = self.team_one.name
+            return self.winning_team
+        else:
+            self.winning_team = self.team_two.name
+            return self.winning_team
+        print("battle ended")
 
-    # def show_stats(self):
-    #     print(f"The winner is team:  {self.team_battle}")
+    def show_stats(self):
+        print(f"The winner is team:  {self.winning_team}")
 
         self.team_one.stats()
         self.team_two.stats()
 
-        if self.winning_team == self.team_one.name:
-            for hero in self.team_one.heroes:
-                if hero.status == "Alive":
-                    print("Surviving Heroes: " + hero.name)
-        elif self.winning_team == self.team_two.name:
-            for hero in self.team_two.heroes:
-                if hero.status == "Alive":
-                    print("Surviving Heroes: " + hero.name)
+        # if self.winning_team == self.team_one.name:
+        #     for hero in self.team_one.heroes:
+        #         if hero.status == "Alive":
+        #             print("Surviving Heroes: " + hero.name)
+        # elif self.winning_team == self.team_two.name:
+        #     for hero in self.team_two.heroes:
+        #         if hero.status == "Alive":
+        #             print("Surviving Heroes: " + hero.name)
 
 
 if __name__ == "__main__":
@@ -362,7 +377,7 @@ if __name__ == "__main__":
     while game_is_running:
 
         arena.team_battle()
-        arena.show_stats()
+        # arena.show_stats()
         play_again = input("Play Again? Y or N: ")
 
         # Check for Player Input
